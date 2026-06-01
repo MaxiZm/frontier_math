@@ -1,0 +1,33 @@
+[project]
+name = "math-discovery-harness"
+version = "0.1.0"
+description = "A verifier-driven mathematical-discovery harness for LLM / Claude Code agents."
+readme = "README.md"
+requires-python = ">=3.11"
+license = { text = "MIT" }
+dependencies = [
+    "pyyaml>=6",
+    "jsonschema>=4",
+    "sympy>=1.12",
+    "mpmath>=1.3",
+    "networkx>=3",
+]
+
+[project.optional-dependencies]
+dev = ["pytest>=8"]
+
+[build-system]
+requires = ["hatchling"]
+build-backend = "hatchling.build"
+
+[tool.hatch.build.targets.wheel]
+packages = ["src/math_harness"]
+
+[project.scripts]
+mh-evaluate = "math_harness.runners.run_problem:main"
+mh-ladder = "math_harness.runners.run_ladder:main"
+mh-create-problem = "math_harness.runners.scaffold:main"
+
+[tool.pytest.ini_options]
+testpaths = ["tests"]
+pythonpath = ["src"]

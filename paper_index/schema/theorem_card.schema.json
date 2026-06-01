@@ -1,0 +1,20 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://math-discovery-harness/schema/theorem_card.schema.json",
+  "title": "TheoremCard",
+  "description": "A reusable statement of a theorem, lemma, or bound.",
+  "type": "object",
+  "required": ["name", "statement"],
+  "additionalProperties": true,
+  "properties": {
+    "name": { "type": "string" },
+    "aka": { "type": "array", "items": { "type": "string" } },
+    "topic": { "type": "string" },
+    "statement": { "type": "string" },
+    "hypotheses": { "type": "array", "items": { "type": "string" } },
+    "conclusion": { "type": "string" },
+    "use_cases": { "type": "array", "items": { "type": "string" } },
+    "source": { "type": "string" },
+    "related": { "type": "array", "items": { "type": "string" } }
+  }
+}

@@ -1,0 +1,44 @@
+id: template_problem
+benchmark: custom
+domain:
+  - uncategorized
+output_type: construction
+evaluation_mode: new_construction
+compliance_style: explicit_construction
+difficulty:
+  level: 1
+  description: TODO describe difficulty / expected approach
+objective:
+  direction: minimize
+  metric: TODO_metric
+  baseline: null
+entrypoint:
+  function_name: solve
+  file: final/proposed_solution.py
+validator:
+  file: validator.py
+  timeout_seconds: 120
+  deterministic: true
+compliance:
+  allow_floats: true
+  allow_search_inside_final_solution: false
+  allow_hardcoded_candidate: true
+  require_deterministic: true
+  forbidden_imports: []
+  forbidden_calls:
+    - eval
+    - exec
+  notes: >
+    Final answer must be explicit and self-contained. Deterministic finite loops
+    that build the answer are allowed; hidden search/optimization is not.
+retrieval:
+  enabled: true
+  default_policy: trigger_based
+tools:
+  recommended:
+    - python
+    - sympy
+    - mpmath
+  optional:
+    - sage
+    - paper_search

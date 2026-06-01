@@ -1,0 +1,19 @@
+# Optional. The harness runs fine WITHOUT docker: candidates execute in a Python
+# subprocess sandbox with a wall-clock timeout and best-effort POSIX resource limits.
+#
+# This compose file is a convenience for running the harness in a pinned container
+# (e.g. for stronger isolation or to install heavy math tools). It is NOT required
+# for `pytest` or the bundled examples.
+services:
+  harness:
+    build:
+      context: .
+      dockerfile_inline: |
+        FROM python:3.11-slim
+        WORKDIR /app
+        COPY . /app
+        RUN pip install -e ".[dev]"
+    working_dir: /app
+    volumes:
+      - .:/app
+    command: pytest -q

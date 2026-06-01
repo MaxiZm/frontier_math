@@ -1,0 +1,18 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://math-discovery-harness/schema/topic_card.schema.json",
+  "title": "TopicCard",
+  "description": "Front-matter schema for a topic pack's topic_card.",
+  "type": "object",
+  "required": ["topic", "scope"],
+  "additionalProperties": true,
+  "properties": {
+    "topic": { "type": "string" },
+    "scope": { "type": "string" },
+    "key_objects": { "type": "array", "items": { "type": "string" } },
+    "standard_methods": { "type": "array", "items": { "type": "string" } },
+    "recommended_tools": { "type": "array", "items": { "type": "string" } },
+    "canonical_papers": { "type": "string" },
+    "recent_papers": { "type": "string" }
+  }
+}

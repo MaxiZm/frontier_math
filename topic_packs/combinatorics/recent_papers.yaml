@@ -1,0 +1,36 @@
+# More recent / advanced references for combinatorics.
+# Fields: title, authors, year, venue, why_relevant.
+# Do NOT fabricate arXiv IDs or DOIs; omit or mark identifiers "unknown".
+
+papers:
+  - title: "A new proof of the density Hales–Jewett theorem (Polymath)"
+    authors: "D. H. J. Polymath"
+    year: 2012
+    venue: "Annals of Mathematics"
+    why_relevant: >
+      Combinatorial (non-ergodic) proof of density Hales–Jewett, a cornerstone of
+      density Ramsey theory; product of the first Polymath collaboration.
+
+  - title: "Bounds on Roth's theorem / progression-free sets (cap set progress)"
+    authors: "Jordan S. Ellenberg, Dion Gijswijt"
+    year: 2017
+    venue: "Annals of Mathematics"
+    why_relevant: >
+      The polynomial method upper bound for cap sets in F_3^n; a modern technique
+      (slice rank) widely reused for additive-combinatorial existence bounds.
+
+  - title: "Hypergraph containers"
+    authors: "József Balogh, Robert Morris, Wojciech Samotij"
+    year: 2015
+    venue: "Journal of the AMS"
+    why_relevant: >
+      The container method: counts and structures sparse independent sets in
+      hypergraphs; a general-purpose tool for extremal and counting problems.
+
+  - title: "Proof of the union-closed sets conjecture bound (0.38 fraction)"
+    authors: "Justin Gilmer"
+    year: 2022
+    venue: "preprint (identifier unknown)"
+    why_relevant: >
+      Entropy-method breakthrough on the union-closed sets conjecture; illustrates
+      the modern information-theoretic approach to extremal set theory.
