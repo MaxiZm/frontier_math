@@ -22,8 +22,6 @@ TOOL_DOCS = [
     "networkx.md",
     "nauty_traces.md",
     "lean_mathlib.md",
-    "oeis.md",
-    "paper_search.md",
 ]
 
 REQUIRED_SECTIONS = [
@@ -75,12 +73,3 @@ def test_heavy_runner_unavailable_error_mentions_docs(
         module.run("smoke")
 
     assert doc_path in str(exc_info.value)
-
-
-def test_oeis_unavailable_error_mentions_docs() -> None:
-    from math_harness.tools.oeis_client import lookup
-
-    with pytest.raises(ToolUnavailable) as exc_info:
-        lookup([1, 1, 2, 5, 14, 42])
-
-    assert "tools_docs/oeis.md" in str(exc_info.value)

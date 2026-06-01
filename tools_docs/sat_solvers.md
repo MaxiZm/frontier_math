@@ -1,7 +1,5 @@
 # SAT Solvers
 
-Status: documented interface; runner stubbed in this pass.
-
 ## Purpose
 
 SAT solvers decide Boolean satisfiability for CNF formulas and are often faster than SMT solvers for pure finite Boolean search.
@@ -23,7 +21,7 @@ SAT solvers decide Boolean satisfiability for CNF formulas and are often faster 
 ## Availability check
 
 ```bash
-command -v kissat || command -v cadical || command -v glucose || command -v minisat
+command -v kissat && command -v cadical && command -v minisat
 ```
 
 Expected successful output:
@@ -34,7 +32,7 @@ Expected successful output:
 
 ## Installation notes
 
-Install a solver binary such as Kissat, CaDiCaL, Glucose, or MiniSat, or use the Python `python-sat` package. Availability varies by platform.
+This environment has Kissat, CaDiCaL, MiniSat, and Python `python-sat` installed. Glucose CLI is not installed, but PySAT provides `Glucose3` as a Python solver backend.
 
 ## Minimal smoke test
 
