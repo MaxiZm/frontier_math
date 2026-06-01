@@ -1,0 +1,32 @@
+# Python
+__pycache__/
+*.py[cod]
+*.egg-info/
+.eggs/
+build/
+dist/
+.venv/
+venv/
+.env
+
+# Tooling
+.pytest_cache/
+.ruff_cache/
+.mypy_cache/
+.coverage
+htmlcov/
+
+# Run artifacts (keep the directory skeleton via .gitkeep, ignore generated content)
+runs/**/run.json
+runs/**/transcript.md
+runs/**/*.jsonl
+runs/**/best_candidate.py
+runs/**/best_score.json
+runs/**/final_report.md
+runs/**/artifacts/
+
+# Generated solution packs
+*.solution_pack.zip
+
+# OS
+.DS_Store

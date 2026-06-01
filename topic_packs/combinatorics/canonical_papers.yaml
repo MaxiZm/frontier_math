@@ -1,0 +1,45 @@
+# Canonical references for combinatorics.
+# Fields: title, authors, year, venue, why_relevant.
+# Do NOT fabricate arXiv IDs or DOIs; omit or mark identifiers "unknown".
+
+papers:
+  - title: "The Probabilistic Method"
+    authors: "Noga Alon, Joel H. Spencer"
+    year: 2016            # 4th edition; first edition 1992
+    venue: "Wiley (book)"
+    why_relevant: >
+      The standard reference for the probabilistic method: first/second moment,
+      alteration, the Lovász Local Lemma, and concentration. Primary source for
+      existence proofs in combinatorics.
+
+  - title: "Enumerative Combinatorics, Volumes 1 and 2"
+    authors: "Richard P. Stanley"
+    year: 2011            # Vol. 1, 2nd ed.; Vol. 2, 1999
+    venue: "Cambridge University Press (book)"
+    why_relevant: >
+      Definitive treatment of counting and generating functions; the go-to for
+      bijective methods, partitions, and species.
+
+  - title: "On a Lemma of Littlewood and Offord"
+    authors: "Paul Erdős"
+    year: 1945
+    venue: "Bulletin of the AMS"
+    why_relevant: >
+      Foundational extremal set theory (a strengthening of Sperner's theorem) and
+      an early model for the antichain / anticoncentration line of arguments.
+
+  - title: "Intersection theorems for systems of finite sets"
+    authors: "Paul Erdős, Chao Ko, Richard Rado"
+    year: 1961
+    venue: "Quarterly Journal of Mathematics"
+    why_relevant: >
+      The Erdős–Ko–Rado theorem: the canonical extremal result on intersecting
+      families, and the template for many later extremal set-theory bounds.
+
+  - title: "generatingfunctionology"
+    authors: "Herbert S. Wilf"
+    year: 2006            # 3rd edition; freely available
+    venue: "A K Peters (book)"
+    why_relevant: >
+      Accessible, computation-friendly guide to ordinary and exponential
+      generating functions; useful when translating a construction into algebra.

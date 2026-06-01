@@ -1,0 +1,43 @@
+id: triangle_free_max_edges_6
+benchmark: toy_discovery
+domain:
+  - extremal_graph_theory
+  - combinatorics
+output_type: construction
+evaluation_mode: new_construction
+compliance_style: explicit_construction
+difficulty:
+  level: 1
+  description: construct a triangle-free graph on 6 vertices with as many edges as possible
+objective:
+  direction: maximize
+  metric: edge_count
+  baseline: 8
+entrypoint:
+  function_name: solve
+  file: final/proposed_solution.py
+validator:
+  file: validator.py
+  timeout_seconds: 15
+  deterministic: true
+compliance:
+  allow_floats: false
+  allow_search_inside_final_solution: false
+  allow_hardcoded_candidate: true
+  require_deterministic: true
+  forbidden_imports:
+    - scipy.optimize
+    - ortools
+    - pulp
+  forbidden_calls:
+    - eval
+    - exec
+  notes: >
+    The final answer must return an explicit edge list. Deterministic finite
+    loops to build the list are allowed; no optimization/search libraries.
+retrieval:
+  enabled: true
+  default_policy: trigger_based
+tools:
+  recommended:
+    - networkx

@@ -1,0 +1,46 @@
+id: closed_form_constant_basel
+benchmark: toy_discovery
+domain:
+  - analysis
+  - mathematical_constants
+output_type: constant
+evaluation_mode: ground_truth_computable
+compliance_style: closed_form
+difficulty:
+  level: 0
+  description: warm-up; the closed form is classical (Basel problem)
+objective:
+  direction: minimize
+  metric: abs_error
+  baseline: 1.0e-6
+entrypoint:
+  function_name: solve
+  file: final/proposed_solution.py
+validator:
+  file: validator.py
+  timeout_seconds: 15
+  deterministic: true
+compliance:
+  allow_floats: true
+  allow_search_inside_final_solution: false
+  allow_hardcoded_candidate: true
+  require_deterministic: true
+  forbidden_imports:
+    - scipy
+    - scipy.optimize
+    - ortools
+    - pulp
+  forbidden_calls:
+    - eval
+    - exec
+    - __import__
+  notes: >
+    Return an explicit closed-form expression (sympy is fine). No numerical
+    root-finding / optimization / search in the final answer.
+retrieval:
+  enabled: true
+  default_policy: trigger_based
+tools:
+  recommended:
+    - sympy
+    - mpmath

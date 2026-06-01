@@ -1,0 +1,82 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://math-discovery-harness/schema/problem.schema.json",
+  "title": "Problem",
+  "description": "Schema for a problem.yaml describing a verifier-checked math-discovery problem.",
+  "type": "object",
+  "required": ["id", "benchmark", "output_type", "evaluation_mode", "entrypoint", "validator"],
+  "additionalProperties": true,
+  "properties": {
+    "id": { "type": "string", "minLength": 1 },
+    "benchmark": { "type": "string", "minLength": 1 },
+    "domain": {
+      "oneOf": [
+        { "type": "string" },
+        { "type": "array", "items": { "type": "string" } }
+      ]
+    },
+    "output_type": {
+      "type": "string",
+      "enum": ["constant", "function", "construction", "formula", "parameters"]
+    },
+    "evaluation_mode": {
+      "type": "string",
+      "enum": ["ground_truth_computable", "benchmark_best_known", "new_construction"]
+    },
+    "compliance_style": {
+      "type": "string",
+      "enum": ["closed_form", "explicit_construction", "executable_formula"]
+    },
+    "difficulty": {
+      "type": "object",
+      "additionalProperties": true,
+      "properties": {
+        "level": { "type": ["integer", "number", "string"] },
+        "description": { "type": "string" }
+      }
+    },
+    "objective": {
+      "type": "object",
+      "additionalProperties": true,
+      "properties": {
+        "direction": { "type": "string", "enum": ["minimize", "maximize"] },
+        "metric": { "type": "string" },
+        "baseline": { "type": ["number", "null"] }
+      }
+    },
+    "entrypoint": {
+      "type": "object",
+      "required": ["function_name", "file"],
+      "additionalProperties": true,
+      "properties": {
+        "function_name": { "type": "string", "minLength": 1 },
+        "file": { "type": "string", "minLength": 1 }
+      }
+    },
+    "validator": {
+      "type": "object",
+      "required": ["file"],
+      "additionalProperties": true,
+      "properties": {
+        "file": { "type": "string", "minLength": 1 },
+        "timeout_seconds": { "type": "number", "exclusiveMinimum": 0 },
+        "deterministic": { "type": "boolean" }
+      }
+    },
+    "compliance": {
+      "type": "object",
+      "additionalProperties": true,
+      "properties": {
+        "allow_floats": { "type": "boolean" },
+        "allow_search_inside_final_solution": { "type": "boolean" },
+        "allow_hardcoded_candidate": { "type": "boolean" },
+        "require_deterministic": { "type": "boolean" },
+        "forbidden_imports": { "type": "array", "items": { "type": "string" } },
+        "forbidden_calls": { "type": "array", "items": { "type": "string" } },
+        "notes": { "type": "string" }
+      }
+    },
+    "retrieval": { "type": "object", "additionalProperties": true },
+    "tools": { "type": "object", "additionalProperties": true }
+  }
+}

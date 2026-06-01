@@ -1,0 +1,52 @@
+# Canonical references for extremal graph theory.
+# Fields: title, authors, year, venue, why_relevant.
+# Do NOT fabricate arXiv IDs or DOIs; omit or mark identifiers "unknown".
+
+papers:
+  - title: "On an extremal problem in graph theory (Egy gráfelméleti szélsőérték feladatról)"
+    authors: "Pál Turán"
+    year: 1941
+    venue: "Matematikai és Fizikai Lapok"
+    why_relevant: >
+      The origin of extremal graph theory: determines the maximum edge count of a
+      K_{r+1}-free graph (Turán's theorem) and the extremal Turán graph.
+
+  - title: "On a problem of K. Zarankiewicz"
+    authors: "Tamás Kővári, Vera T. Sós, Pál Turán"
+    year: 1954
+    venue: "Colloquium Mathematicum"
+    why_relevant: >
+      The Kővári–Sós–Turán bound ex(n, K_{s,t}) = O(n^{2-1/s}); foundational for
+      bipartite forbidden subgraphs and the Zarankiewicz problem.
+
+  - title: "On the structure of linear graphs"
+    authors: "Paul Erdős, Arthur H. Stone"
+    year: 1946
+    venue: "Bulletin of the AMS"
+    why_relevant: >
+      The Erdős–Stone theorem, later sharpened by Simonovits, fixing the
+      asymptotic extremal number in terms of the chromatic number of H.
+
+  - title: "Graph theory and probability"
+    authors: "Paul Erdős"
+    year: 1959
+    venue: "Canadian Journal of Mathematics"
+    why_relevant: >
+      Introduces the probabilistic deletion method to prove existence of graphs
+      with simultaneously high girth and high chromatic number.
+
+  - title: "Regular partitions of graphs"
+    authors: "Endre Szemerédi"
+    year: 1978
+    venue: "Colloque CNRS, Problèmes Combinatoires et Théorie des Graphes"
+    why_relevant: >
+      The Szemerédi regularity lemma; underpins the removal lemma and a large body
+      of dense extremal and property-testing results.
+
+  - title: "Norm-graphs and bipartite Turán numbers"
+    authors: "Noga Alon, Lajos Rónyai, Tibor Szabó"
+    year: 1999
+    venue: "Combinatorica"
+    why_relevant: >
+      Explicit algebraic (norm-graph) constructions giving tight lower bounds for
+      ex(n, K_{s,t}) for several s, t; the template for finite-field constructions.

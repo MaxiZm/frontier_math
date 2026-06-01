@@ -1,0 +1,30 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://math-discovery-harness/schema/paper_card.schema.json",
+  "title": "PaperCard",
+  "description": "A compact, retrieval-friendly summary of a paper.",
+  "type": "object",
+  "required": ["title", "summary"],
+  "additionalProperties": true,
+  "properties": {
+    "title": { "type": "string" },
+    "authors": { "type": "array", "items": { "type": "string" } },
+    "year": { "type": ["integer", "null"] },
+    "venue": { "type": "string" },
+    "identifiers": {
+      "type": "object",
+      "additionalProperties": true,
+      "properties": {
+        "arxiv": { "type": "string" },
+        "doi": { "type": "string" },
+        "url": { "type": "string" }
+      }
+    },
+    "topics": { "type": "array", "items": { "type": "string" } },
+    "summary": { "type": "string" },
+    "key_results": { "type": "array", "items": { "type": "string" } },
+    "methods": { "type": "array", "items": { "type": "string" } },
+    "when_to_use": { "type": "string" },
+    "theorem_cards": { "type": "array", "items": { "type": "string" } }
+  }
+}

@@ -1,0 +1,36 @@
+# More recent / advanced references for extremal graph theory.
+# Fields: title, authors, year, venue, why_relevant.
+# Do NOT fabricate arXiv IDs or DOIs; omit or mark identifiers "unknown".
+
+papers:
+  - title: "A survey: Turán-type problems / extremal numbers of bipartite graphs"
+    authors: "Zoltán Füredi, Miklós Simonovits"
+    year: 2013
+    venue: "Erdős Centennial (Bolyai Society Mathematical Studies)"
+    why_relevant: >
+      Comprehensive modern survey of Turán-type extremal results, especially the
+      degenerate (bipartite) regime; an excellent orientation map before a search.
+
+  - title: "An improved lower bound for the Ramsey number R(4,t) / triangle-free process"
+    authors: "Tom Bohman, Peter Keevash"
+    year: 2010
+    venue: "Inventiones Mathematicae"
+    why_relevant: >
+      The triangle-free process: a refined probabilistic construction sharpening
+      Ramsey and independence-number bounds; modern random-greedy technique.
+
+  - title: "A new upper bound for diagonal Ramsey numbers"
+    authors: "Marcelo Campos, Simon Griffiths, Robert Morris, Julian Sahasrabudhe"
+    year: 2023
+    venue: "preprint (identifier unknown)"
+    why_relevant: >
+      First exponential improvement on the upper bound for R(k,k) in decades;
+      illustrates the current state of the art in Ramsey-type extremal arguments.
+
+  - title: "Equiangular lines and spherical codes / spectral extremal methods"
+    authors: "Zilin Jiang, Jonathan Tidor, Yuan Yao, Shengtong Zhang, Yufei Zhao"
+    year: 2021
+    venue: "Annals of Mathematics"
+    why_relevant: >
+      Resolves the maximum number of equiangular lines with a fixed angle via
+      spectral graph theory; a showcase of eigenvalue methods in extremal problems.
