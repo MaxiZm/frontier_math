@@ -1,31 +1,118 @@
 # mpmath
 
-## What it's for
-Arbitrary-precision real and complex floating-point arithmetic: high-precision
-evaluation of constants, special functions, sums, products, and limits.
+## Purpose
 
-## When to use it
-- High-precision numerical exploration of a constant or integral.
-- Getting enough digits to recognize a closed form (then confirm exactly with
-  PARI `algdep` / Sage / `mpmath.identify`).
-- Quick sanity checks of asymptotics or convergence.
-- **Not** for the final answer when the problem bans numerical methods — use it
-  at research time, then reconstruct the value exactly.
+mpmath provides arbitrary-precision real and complex numerical evaluation for constants, special functions, sums, products, limits, and numerical sanity checks.
 
-## How to call it
-Pure-Python package, imported directly:
+## Use when
 
-```python
-from mpmath import mp, mpf, pi, zeta, quad, identify
-mp.dps = 50                      # 50 decimal digits
-val = zeta(3)                    # high-precision evaluation
-guess = identify(val, ['zeta(3)'])  # try to recognize a closed form
+- You need high-precision numerical evidence for a closed-form candidate.
+- You need constants or special functions at controlled precision.
+- You want to compare a proposed formula against a numeric target.
+- You need initial digits before using recognition tools such as PARI/GP or Sage.
+
+## Do not use when
+
+- You need proof; high-precision agreement is evidence, not a theorem.
+- The final-answer compliance rules ban numerical search, integration, or root finding.
+- Exact algebraic structure is required; prefer SymPy, Sage, or PARI/GP.
+
+## Availability check
+
+```bash
+python - <<'PY'
+from mpmath import mp
+print(mp.dps)
+PY
 ```
 
-`quad` (numerical integration) and `findroot` (root finding) are research-time
-tools; their *results* may be allowed in a final answer only as an explicit
-literal, never as a live call (`docs/07-final-answer-compliance.md`).
+Expected successful output:
 
-## Install
-`pip install mpmath` (a dependency of SymPy, usually already present). Pure
-Python; no external binary. Available in the harness by default.
+```txt
+15
+```
+
+## Installation notes
+
+mpmath is a project dependency. Install the harness with `pip install -e ".[dev]"` or `uv sync`.
+
+## Minimal smoke test
+
+```python
+from mpmath import mp
+
+mp.dps = 100
+value = mp.zeta(2)
+candidate = mp.pi**2 / 6
+print(abs(value - candidate))
+```
+
+## Common workflows
+
+### Workflow 1: Closed-form numeric check
+
+Goal: test whether a proposed expression matches a target constant.
+
+Steps: set `mp.dps`, evaluate target and candidate, compare absolute error to tolerance.
+
+Code:
+
+```python
+from mpmath import mp
+mp.dps = 80
+print(abs(mp.zeta(2) - mp.pi**2 / 6))
+```
+
+Expected output: a tiny value such as `0.0`.
+
+### Workflow 2: Generate digits for recognition
+
+Goal: produce enough digits to feed into PARI/GP `algdep`, OEIS, or a paper search clue.
+
+Steps: raise precision, compute the value, save digits and code under `experiments/`.
+
+Code:
+
+```python
+from mpmath import mp
+mp.dps = 120
+print(mp.nstr(mp.euler, 100))
+```
+
+Expected output: 100 significant digits of Euler's constant.
+
+## Typical mathematical objects
+
+mpmath is good for high-precision constants, special functions, integrals, roots, infinite sums/products, asymptotic checks, and numerical comparisons.
+
+## Agent protocol
+
+When using mpmath, the agent must:
+
+1. State the precision and tolerance.
+2. Run the smallest numeric check first.
+3. Save code under `experiments/`.
+4. Save output under `experiments/results/` when it informs a conjecture.
+5. Record precision, tolerance, and conclusion in `notes/attempt_log.md`.
+6. Never present numerical agreement alone as proof.
+
+## Pitfalls
+
+- Too little precision can create false matches.
+- Cancellation can destroy meaningful digits.
+- `quad`, `findroot`, and optimization-style loops are research-time tools unless explicitly allowed.
+- Matching many digits can still be coincidence or overfitting.
+
+## Example integration with the harness
+
+```python
+from math_harness.validators.numeric_closed_form import NumericClosedFormValidator
+
+validator = NumericClosedFormValidator(target="pi**2/6", tol="1e-50")
+result = validator.validate("pi**2/6")
+assert result.passed
+```
+
+## Final-answer compliance notes
+
+mpmath may be used during research to identify or check a candidate. A final candidate may use mpmath constants or functions only when the benchmark permits executable formulas of that style; hidden numerical search, integration, and root finding in final code are normally forbidden.

@@ -17,5 +17,6 @@ def lookup(terms: list[int]):
     raise ToolUnavailable(
         "oeis",
         "No OEIS backend configured. Wire up the mcp_servers/oeis_search server "
+        "and see tools_docs/oeis.md for setup, smoke tests, and usage patterns "
         f"to query the sequence {format_sequence(terms)}.",
     )

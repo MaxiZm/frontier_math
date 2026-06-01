@@ -1,37 +1,120 @@
 # SAT Solvers
 
-## What it's for
-Fast decision of boolean satisfiability (CNF). For purely propositional finite
-search and existence/non-existence questions, a dedicated CDCL SAT solver
-(MiniSat, Glucose, CaDiCaL, Kissat) often beats a general SMT solver.
+Status: documented interface; runner stubbed in this pass.
 
-## When to use it
-Per the tool router (`docs/02-tool-router.md`), use Z3/SAT/ILP for finite
-constraint search. Choose a SAT solver when:
-- the problem encodes naturally as CNF (graph colorings, Ramsey-type searches,
-  combinatorial existence);
-- you want maximum raw speed and have an effective encoding;
-- an `UNSAT` result (ideally with a DRAT proof) serves as a non-existence
-  certificate.
+## Purpose
 
-## How to call it
-Via the Python `pysat` toolkit, or by emitting DIMACS to a solver binary:
+SAT solvers decide Boolean satisfiability for CNF formulas and are often faster than SMT solvers for pure finite Boolean search.
 
-```python
-from pysat.solvers import Glucose3
-s = Glucose3()
-s.add_clause([1, 2]); s.add_clause([-1, 3])
-print(s.solve(), s.get_model())
+## Use when
+
+- The problem has a natural Boolean encoding.
+- You need raw speed for graph coloring, Ramsey-style search, exact cover, or construction existence.
+- You can emit DIMACS CNF and parse a model.
+- An `UNSAT` result plus proof artifact would be meaningful for a bounded non-existence claim.
+
+## Do not use when
+
+- Constraints are naturally integer, real, or algebraic; use Z3/ILP/Sage.
+- You cannot validate that the CNF encoding matches the math problem.
+- You need a human-readable proof of the original theorem.
+- The search space is tiny enough for direct Python enumeration.
+
+## Availability check
+
+```bash
+command -v kissat || command -v cadical || command -v glucose || command -v minisat
 ```
 
-DIMACS workflow: write `problem.cnf`, run `cadical problem.cnf`, parse the model.
-A **final** answer must emit the found object explicitly, not invoke a solver at
-scoring time (`docs/07-final-answer-compliance.md`).
+Expected successful output:
 
-## Install
-`pip install python-sat`, or install a solver binary (`cadical`, `kissat`,
-`glucose`, `minisat`).
+```txt
+/path/to/a/sat-solver
+```
 
-> **Runner status: STUB.** The harness tool runner for SAT solvers raises
-> `ToolUnavailable` until a solver (`python-sat` or a solver binary) is
-> installed.
+## Installation notes
+
+Install a solver binary such as Kissat, CaDiCaL, Glucose, or MiniSat, or use the Python `python-sat` package. Availability varies by platform.
+
+## Minimal smoke test
+
+```bash
+cat > /tmp/smoke.cnf <<'CNF'
+p cnf 2 2
+1 0
+-1 2 0
+CNF
+kissat /tmp/smoke.cnf
+```
+
+Expected output contains `SATISFIABLE` and a model when using Kissat. Substitute another installed solver if needed.
+
+## Common workflows
+
+### Workflow 1: DIMACS construction search
+
+Goal: find a Boolean assignment satisfying a combinatorial encoding.
+
+Steps: map mathematical variables to integer literals, write DIMACS, run solver, decode model into an explicit object.
+
+Code:
+
+```txt
+p cnf 2 2
+1 0
+-1 2 0
+```
+
+Expected output: satisfiable model with variable `1` true and variable `2` true or unconstrained by the second clause.
+
+### Workflow 2: Exact-cover style encoding
+
+Goal: enforce exactly-one constraints for choices.
+
+Steps: add one at-least-one clause and pairwise at-most-one clauses, solve, decode selected literals.
+
+Code:
+
+```python
+def exactly_one(lits):
+    clauses = [list(lits)]
+    clauses += [[-a, -b] for i, a in enumerate(lits) for b in lits[i + 1:]]
+    return clauses
+```
+
+Expected output: CNF clauses enforcing one selected literal.
+
+## Typical mathematical objects
+
+SAT solvers are good for Boolean matrices, graph colorings, exact cover, finite incidence structures, Ramsey searches, packing/covering encodings, and bounded existence questions.
+
+## Agent protocol
+
+When using SAT solvers, the agent must:
+
+1. State the literal mapping and each constraint family.
+2. Run a tiny CNF smoke test first.
+3. Save encoder code and DIMACS under `experiments/`.
+4. Save solver logs/models under `experiments/results/`.
+5. Record decoding and validation in `notes/attempt_log.md`.
+6. Validate decoded objects with the problem validator, not just solver output.
+
+## Pitfalls
+
+- Wrong encodings produce convincing but irrelevant models.
+- DIMACS literal numbering mistakes are common.
+- SAT models may leave variables arbitrary; decoding must handle this.
+- `UNSAT` without a proof artifact is not always enough for a final mathematical claim.
+
+## Example integration with the harness
+
+```python
+from math_harness.tools.sat_runner import available, run
+
+if available():
+    run("p cnf 1 1\n1 0\n")
+```
+
+## Final-answer compliance notes
+
+SAT solvers are research-time search tools. Final candidates should contain the decoded explicit object or proof artifact requested by the problem, not invoke a SAT solver during scoring unless explicitly allowed.

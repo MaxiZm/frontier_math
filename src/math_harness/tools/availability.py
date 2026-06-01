@@ -9,12 +9,41 @@ from ..core.exceptions import ToolUnavailable
 
 # Logical tool name -> (env var override, binary name, install guidance).
 TOOL_BINARIES: dict[str, tuple[str, str, str]] = {
-    "sage": ("SAGE_BIN", "sage", "Install SageMath (https://www.sagemath.org)."),
-    "gap": ("GAP_BIN", "gap", "Install GAP (https://www.gap-system.org)."),
-    "pari": ("PARI_BIN", "gp", "Install PARI/GP (https://pari.math.u-bordeaux.fr)."),
-    "z3": ("Z3_BIN", "z3", "Install Z3 (pip install z3-solver, or the z3 binary)."),
-    "lean": ("LEAN_BIN", "lean", "Install Lean + mathlib (https://leanprover.github.io)."),
-    "nauty": ("NAUTY_BIN", "geng", "Install nauty/traces (https://pallini.di.uniroma1.it)."),
+    "sage": (
+        "SAGE_BIN",
+        "sage",
+        "Install SageMath and see tools_docs/sage.md for setup, smoke tests, and usage patterns.",
+    ),
+    "gap": (
+        "GAP_BIN",
+        "gap",
+        "Install GAP and see tools_docs/gap.md for setup, smoke tests, and usage patterns.",
+    ),
+    "pari": (
+        "PARI_BIN",
+        "gp",
+        "Install PARI/GP and see tools_docs/pari_gp.md for setup, smoke tests, and usage patterns.",
+    ),
+    "z3": (
+        "Z3_BIN",
+        "z3",
+        "Install z3-solver or the z3 binary and see tools_docs/z3.md for setup, smoke tests, and usage patterns.",
+    ),
+    "sat": (
+        "SAT_BIN",
+        "kissat",
+        "Install a SAT solver and see tools_docs/sat_solvers.md for setup, smoke tests, and usage patterns.",
+    ),
+    "lean": (
+        "LEAN_BIN",
+        "lean",
+        "Install Lean + mathlib and see tools_docs/lean_mathlib.md for setup, smoke tests, and usage patterns.",
+    ),
+    "nauty": (
+        "NAUTY_BIN",
+        "geng",
+        "Install nauty/traces and see tools_docs/nauty_traces.md for setup, smoke tests, and usage patterns.",
+    ),
 }
 
 

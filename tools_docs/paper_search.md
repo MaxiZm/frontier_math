@@ -1,34 +1,117 @@
 # Paper Search
 
-## What it's for
-Finding the *method, construction, bound, or theorem* needed to make progress —
-across arXiv, Semantic Scholar, OpenAlex, and the local paper index. Search for
-methods, **not** for dumping context (`docs/02-tool-router.md`).
+Status: documented interface; MCP search servers stubbed in this pass.
 
-## When to use it
-Only when the retrieval policy triggers (`docs/04-retrieval-policy.md`):
-unfamiliar term, a pattern that smells like known literature, a needed external
-theorem, three failed attempts, a clearly specialized area, or known
-constructions/bounds required. Otherwise, do not read papers.
+## Purpose
 
-Search in policy order: **topic card → paper card → theorem card → relevant paper
-section → full paper only if necessary.**
+Paper search finds methods, constructions, bounds, or theorems across topic cards, paper cards, theorem cards, arXiv, Semantic Scholar, OpenAlex, and the local paper index.
 
-## How to call it
-Via the search MCP servers (`mcp_servers/`):
-- `arxiv_search` — preprints by query/author/category.
-- `semantic_scholar_search` — citation-aware search and references.
-- `openalex_search` — open scholarly metadata.
-- `local_paper_index` — the curated `paper_index/` cards (check this first).
-- `theorem_search` — named theorems (mathlib / formalized corpora).
-- `oeis_search` — integer-sequence identification (`tools_docs/oeis.md`).
+## Use when
 
-## Logging & honesty
-- Log **every** source consulted in the problem's `retrieved_context.md`.
-- Capture the usable method/theorem, not the whole paper.
-- Do not fabricate arXiv IDs or DOIs; mark uncertain identifiers `unknown`
-  (`docs/11-evaluation-integrity.md`).
+- The retrieval policy triggers: unfamiliar term, known-looking pattern, needed theorem, three failed attempts, specialized area, or required known bounds.
+- You need a method or construction, not generic background.
+- A topic card points to a paper or theorem card.
+- OEIS or experiments suggest a named object.
 
-## Install
-The search MCP servers are interface stubs (`mcp_servers/README.md`); they need
-their backing APIs / local index wired up before live search works.
+## Do not use when
+
+- The next step is a simple computation or validator run.
+- You would dump context without a specific question.
+- The source is private/hidden benchmark material.
+- A topic pack already contains enough information for the current ladder level.
+
+## Availability check
+
+```bash
+find mcp_servers -maxdepth 2 -name README.md -print
+```
+
+Expected successful output:
+
+```txt
+mcp_servers/.../README.md
+```
+
+## Installation notes
+
+The MCP server directories define request/response contracts only. Live search requires future backend wiring and API configuration.
+
+## Minimal smoke test
+
+```python
+from math_harness.retrieval.router import retrieval_order
+
+print(retrieval_order())
+```
+
+Expected output follows: topic card -> paper card -> theorem card -> relevant paper section -> full paper if necessary.
+
+## Common workflows
+
+### Workflow 1: Policy-ordered retrieval
+
+Goal: avoid context dumping while finding a method.
+
+Steps: check topic pack, then paper card, then theorem card, then relevant section, then full paper only if required.
+
+Code:
+
+```txt
+topic card -> paper card -> theorem card -> relevant paper section -> full paper only if necessary
+```
+
+Expected output: a small set of relevant facts logged in `retrieved_context.md`.
+
+### Workflow 2: Save a paper card
+
+Goal: preserve a source's actionable method and metadata.
+
+Steps: record title/authors/source quality, capture only the theorem/method needed, and avoid fabricated IDs.
+
+Code:
+
+```yaml
+title: unknown
+authors: []
+source_quality: preprint
+usable_method: "TODO: summarize only after reading source"
+identifiers:
+  arxiv: unknown
+```
+
+Expected output: a paper card that is honest about uncertainty.
+
+## Typical mathematical objects
+
+Paper search is good for named constructions, known bounds, theorem statements, proof techniques, survey context, and references connecting computed patterns to literature.
+
+## Agent protocol
+
+When using paper search, the agent must:
+
+1. State the retrieval trigger.
+2. Search in policy order: topic card -> paper card -> theorem card -> relevant paper section -> full paper only if necessary.
+3. Save source metadata in `retrieved_context.md` or a paper/theorem card.
+4. Extract methods, bounds, and theorems rather than dumping context.
+5. Label source quality.
+6. Never fabricate arXiv IDs, DOIs, theorem names, or citations.
+
+## Pitfalls
+
+- Search results can be irrelevant despite matching keywords.
+- Generated summaries may hallucinate identifiers or theorem statements.
+- Reading full papers too early wastes context.
+- Known bounds may use different normalization or parameters.
+
+## Example integration with the harness
+
+```python
+from math_harness.retrieval.query_builder import build_query
+
+query = build_query({"domain": "extremal graph theory", "object": "triangle-free graph"})
+print(query)
+```
+
+## Final-answer compliance notes
+
+Literature is research-time evidence. Final candidates must include explicit constructions, formulas, or proof dependencies and must not rely on vague paper references or unverified generated summaries.
